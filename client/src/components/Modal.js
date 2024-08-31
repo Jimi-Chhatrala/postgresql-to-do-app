@@ -1,8 +1,24 @@
-const Modal = () => {
-  const mode = "edit";
+import { useState } from "react";
 
-  const handleChange = () => {
-    console.log("changing!");
+const Modal = () => {
+  const mode = "create";
+  const editMode = mode === "edit" ? true : false;
+
+  const [data, setData] = useState({
+    user_email: "",
+    title: "",
+    progress: "",
+    date: editMode ? "" : new Date(),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((data) => ({
+      ...data,
+      [name]: value,
+    }));
+    console.log(data);
   };
 
   return (
@@ -18,21 +34,23 @@ const Modal = () => {
             maxLength={30}
             placeholder=" Your task goes here"
             name="title"
-            value={""}
+            value={data.title}
             onChange={handleChange}
             required
           />
           <br />
+          <label htmlFor="range">Drag to select your current progress</label>
           <input
             type="range"
+            id="range"
             min="0"
             max="100"
             name="progress"
-            value={""}
+            value={data.progress}
             onChange={handleChange}
             required
           />
-          <input type="submit" value="" />
+          <input className={mode} type="submit" value="SUBMIT" />
         </form>
       </div>
     </div>
