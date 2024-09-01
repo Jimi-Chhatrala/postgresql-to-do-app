@@ -1,15 +1,22 @@
 import { useState } from "react";
 
-const Modal = () => {
-  const mode = "create";
+const Modal = ({ mode, setShowModal, task }) => {
   const editMode = mode === "edit" ? true : false;
 
   const [data, setData] = useState({
-    user_email: "",
-    title: "",
-    progress: "",
+    user_email: editMode ? task.user_email : null,
+    title: editMode ? task.title : null,
+    progress: editMode ? task.progress : 50,
     date: editMode ? "" : new Date(),
   });
+
+  const postData = () => {
+    try {
+      fetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,8 +32,8 @@ const Modal = () => {
     <div className="overlay">
       <div className="modal">
         <div className="form-title-container">
-          <h3>Let's {mode} you task</h3>
-          <button>X</button>
+          <h3>Let's {mode} your task</h3>
+          <button onClick={() => setShowModal(false)}>X</button>
         </div>
         <form>
           <input
